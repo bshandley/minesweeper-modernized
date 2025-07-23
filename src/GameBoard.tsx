@@ -202,6 +202,13 @@ const GameBoard: React.FC = () => {
     <div className="game-board" role="application" aria-label="Game Board">
       <div className="game-header">
         <div className="timer is-size-4">{formatTime(seconds)}</div>
+        <button 
+          className="reset-button"
+          onClick={handleNewGame}
+          title="Reset Game"
+        >
+          🔄
+        </button>
         <div className="mine-counter is-size-5">
           Mines: {mineTotal - flagCount}
         </div>
@@ -232,15 +239,6 @@ const GameBoard: React.FC = () => {
           className="button is-link is-small"
         >
           GitHub
-        </a>
-        <span className="mx-2">|</span>
-        <a
-          href="http://handley.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="button is-link is-small"
-        >
-          Connect
         </a>
       </div>
 

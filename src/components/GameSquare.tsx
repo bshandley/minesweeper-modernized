@@ -35,18 +35,23 @@ const GameSquare: React.FC<GameSquareProps> = ({
   };
 
   const getSquareColor = (): string => {
-    if (square.mine) return 'white';
-    if (square.flagged && !gameOver) return 'black';
+    // Handle flagged squares first (regardless of whether it's a mine)
+    if (square.flagged && !gameOver) return '#dc3545'; // Bright red for better contrast
     
+    // Handle mines that are revealed during game over
+    if (square.mine && gameOver) return 'white';
+    
+    // Handle proximity numbers
     switch (square.proximityTotal) {
-      case 1: return 'blue';
-      case 2: return 'green';
-      case 3: return 'red';
-      case 4: return 'darkblue';
-      case 5: return 'darkred';
-      case 6: return 'darkturquoise';
-      case 7: return 'black';
-      default: return 'gray';
+      case 1: return '#007bff'; // Modern blue
+      case 2: return '#28a745'; // Modern green
+      case 3: return '#dc3545'; // Modern red
+      case 4: return '#6f42c1'; // Modern purple
+      case 5: return '#fd7e14'; // Modern orange
+      case 6: return '#20c997'; // Modern teal
+      case 7: return '#343a40'; // Modern dark gray
+      case 8: return '#6c757d'; // Modern gray
+      default: return '#6c757d';
     }
   };
 
@@ -65,13 +70,14 @@ const GameSquare: React.FC<GameSquareProps> = ({
     background: getBackgroundColor(),
     cursor: gameOver ? 'default' : 'pointer',
     position: 'relative',
-    width: '30px',
-    height: '30px',
-    border: '1px solid #ccc',
-    fontWeight: 'bold',
-    fontSize: '14px',
+    width: '32px',
+    height: '32px',
+    border: '1px solid #e0e6ed',
+    fontWeight: '700',
+    fontSize: '13px',
     color: getSquareColor(),
     userSelect: 'none',
+    borderRadius: '2px',
   };
 
   const contentStyle: CSSProperties = {

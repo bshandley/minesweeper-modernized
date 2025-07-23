@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  flex: 1;
 }
 
 .game-header {
@@ -10,40 +11,74 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 300px;
-  padding: 0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
+  max-width: 320px;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 16px;
   margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  color: white;
 }
 
 .timer {
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
-  color: #2196F3;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reset-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reset-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(180deg);
+}
+
+.reset-button:active {
+  transform: rotate(180deg) scale(0.95);
 }
 
 .mine-counter {
-  font-weight: bold;
-  color: #f44336;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 0.9rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .game-table {
   border-collapse: collapse;
   margin: 0 auto;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15),
+              0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .game-square {
-  border: 1px solid #bbb;
-  transition: all 0.1s ease;
+  border: 1px solid #e0e6ed;
+  transition: all 0.15s ease;
+  position: relative;
 }
 
 .game-square:hover {
-  background: #f5f5f5 !important;
+  background: #f8f9fa !important;
+  transform: scale(1.02);
 }
 
 .game-over-overlay {
@@ -64,7 +99,6 @@
   flex-wrap: wrap;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #eee;
 }
 
 .mx-2 {
@@ -103,32 +137,81 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .game-board {
+    gap: 0.75rem;
+  }
+  
   .game-header {
     font-size: 0.9rem;
+    max-width: 95%;
+    margin-bottom: 0.75rem;
+  }
+  
+  .timer {
+    font-size: 1rem;
+  }
+  
+  .reset-button {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+  
+  .mine-counter {
+    font-size: 0.85rem;
   }
   
   .game-table {
-    transform: scale(0.9);
+    transform: scale(1.1);
+    margin: 1rem 0;
   }
   
   .game-over-overlay {
     max-width: 280px;
   }
+  
+  .game-footer {
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .game-header {
-    flex-direction: column;
+  .game-board {
     gap: 0.5rem;
-    text-align: center;
+  }
+  
+  .game-header {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+  }
+  
+  .timer {
+    font-size: 0.95rem;
+  }
+  
+  .reset-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .mine-counter {
+    font-size: 0.8rem;
   }
   
   .game-table {
-    transform: scale(0.8);
+    transform: scale(1.2);
+    margin: 1.5rem 0;
+    border-radius: 8px;
   }
   
   .game-footer {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
   }
   
   .game-over-overlay {
@@ -140,7 +223,16 @@
 /* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
   .game-square {
-    min-height: 35px;
-    min-width: 35px;
+    min-height: 40px;
+    min-width: 40px;
+  }
+  
+  .game-square:hover {
+    transform: none;
+  }
+  
+  .game-square:active {
+    transform: scale(0.95);
+    background: #e9ecef !important;
   }
 }

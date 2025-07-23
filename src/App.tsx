@@ -7,7 +7,7 @@ const App: React.FC = () => {
     <div className="App">
       <section className="section">
         <div className="container">
-          <h1 className="title">Minesweeper</h1>
+          <h1 className="title">Meinsweeper</h1>
           <p className="subtitle">Please don't sue me, Microsoft.</p>
           <GameBoard />
         </div>
