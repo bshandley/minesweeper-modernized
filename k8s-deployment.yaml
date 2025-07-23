@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minesweeper
+  labels:
+    app: minesweeper
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: minesweeper
+  template:
+    metadata:
+      labels:
+        app: minesweeper
+    spec:
+      containers:
+      - name: minesweeper
+        image: your-registry/minesweeper:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "5000"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: scores-storage
+          mountPath: /app/server/scores.json
+          subPath: scores.json
+      volumes:
+      - name: scores-storage
+        persistentVolumeClaim:
+          claimName: minesweeper-scores-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minesweeper-service
+spec:
+  selector:
+    app: minesweeper
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minesweeper-scores-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
